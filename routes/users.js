@@ -1,10 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-const getName = require('../services/user.service')
+const getName = require('../services/user.service');
+const { isAuthorized } = require('../middlewares/auth.middlewares');
 
 /* GET users listing. */
-router.post('/', function (req, res, next) {
+router.get('/', function (req, res, next) {
+  res.send('Welcome!');
+
+});
+
+router.post('/', isAuthorized, function (req, res, next) {
   const result = getName(req.body);
 
   if (result) {
